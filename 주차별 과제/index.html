@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>1주차 숙제</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+</head>
+<style>
+    body{
+        background-color: pink;
+    }
+    * {
+        font-family: 'Do Hyeon', sans-serif;
+    }
+
+    .image {
+        width: 400px;
+        height: 370px;
+
+        background-image: url("https://s3.ap-northeast-2.amazonaws.com/om-public-static/media/images/products/2021/10/rose_flower_bear.jpg");
+        background-size: cover;
+        background-position: center;
+        margin: 20px auto;
+    }
+
+    .price {
+        font-size: 17px;
+    }
+
+    .tag {
+        margin-left: 520px;
+        display: block;
+    }
+
+    .text {
+        font-size: 14px;
+    }
+
+    .order {
+        margin: auto;
+        width: 400px;
+    }
+    .btn-primary{
+        margin: auto;
+        display: block;
+    }
+</style>
+<script>
+    function order(){
+        alert('주문을 완료하였습니다.');
+    }
+</script>
+<body>
+<div class="image">
+</div>
+<div class="tag">
+    <h3 class="name">로즈플라워 베어 팝니다 <span class="price">가격:49,000원/79,000원</span></h3>
+    <p class="text">소중한 사람에게 오래 간직할 추억을 선물하고 싶은 당신에게.<br>영원히 시들지 않는 PE 조화장미로 제작되어 말랑한 촉감을 느낄 수 있어요.</p>
+</div>
+<div class="order">
+    <div class="input-group mb-3" id="customer">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="customer_name">주문자 이름</span>
+        </div>
+        <input type="text" class="form-control" aria-describedby="customer_name">
+    </div>
+    <div class="input-group mb-3" id="product">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">상품 종류</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01">
+            <option selected>-- 상품을 선택해 주세요 --</option>
+            <option value="1">플라워베어(소형) 49,000원</option>
+            <option value="2">플라워베어(대형) 79,000원</option>
+        </select>
+    </div>
+    <div class="input-group mb-3" id="delivery_method">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">수량</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect02">
+            <option selected>-- 수령 방법을 선택해주세요 --</option>
+            <option value="1">당일배송</option>
+            <option value="2">택배배송 (3천원 할인)</option>
+            <option value="3">방문수령 (5천원 할인)</option>
+        </select>
+    </div>
+    <div class="input-group mb-3" id="address">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="address_text">주소</span>
+        </div>
+        <input type="text" class="form-control" aria-describedby="address_text">
+    </div>
+    <div class="input-group mb-3" id="phone_number">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="phone_text">전화번호</span>
+        </div>
+        <input type="text" class="form-control" aria-describedby="phone_text">
+    </div>
+    <button type="button" class="btn btn-primary" onclick="order()">주문하기</button>
+</div>
+</body>
+
+</html>
