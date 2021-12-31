@@ -20,16 +20,17 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 
-    <title>1주차 숙제</title>
+    <title>2주차 숙제</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 
 </head>
 <style>
-    body{
+    body {
         background-color: pink;
     }
+
     * {
         font-family: 'Do Hyeon', sans-serif;
     }
@@ -49,8 +50,9 @@
     }
 
     .tag {
-        margin-left: 520px;
-        display: block;
+        width: 400px;
+        height: 130px;
+        margin: 7px auto;
     }
 
     .text {
@@ -61,15 +63,96 @@
         margin: auto;
         width: 400px;
     }
-    .btn-primary{
+
+    .btn-primary {
         margin: auto;
         display: block;
     }
+
+    .rate {
+        color: blue;
+    }
+    .table{
+        width:800px;
+        margin: 15px auto;
+        background-color: white;
+    }
 </style>
 <script>
-    function order(){
-        alert('주문을 완료하였습니다.');
+    $(document).ready(function () {
+        get_rate();
+    });
+
+    function get_rate() {
+        $.ajax({
+            type: "GET",
+            url: "http://spartacodingclub.shop/sparta_api/rate",
+            data: {},
+            success: function (response) {
+                let rate = response['rate'];
+                $('#now-rate').text(rate);
+            }
+        })
     }
+    $(document).ready(function (){
+        showOrder();
+    });
+
+    function order() {
+        alert('주문이 완료되었습니다!');
+    }
+
+    // 주문자 이름, 상품 종류, 수령 방법, 주소, 폰번호
+    function postOrder() {
+        let name = $('#name').val();
+        let type = $('#inputGroupSelect01').val();
+        let ship = $('#inputGroupSelect02').val();
+        let address = $('#address').val();
+        let phone = $('#phone').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/order",
+            data: {name_give: name, type_give: type, ship_give: ship, address_give: address, phone_give: phone},
+            success: function (response) { // 성공하면
+                alert(response['msg']);
+                window.location.reload();
+            }
+        })
+    }
+
+
+    function showOrder() {
+        // 서버의 데이터를 받아오기
+        $.ajax({
+            type: "GET",
+            url: "/order",
+            data: {},
+            success: function (response) {
+                let orders = response['all_orders']
+                for (let i = 0; i < orders.length; i++) {
+                    let name = orders[i]['name']
+                    let type = orders[i]['type']
+                    let ship = orders[i]['ship']
+                    let address = orders[i]['address']
+                    let phone = orders[i]['phone']
+
+                    let temp_html = `
+                        <tr>
+                            <td>${name}</td>
+                            <td>${type}</td>
+                            <td>${ship}</td>
+                            <td>${address}</td>
+                            <td>${phone}</td>
+                        </tr>
+                       `
+                    $('#orders_list').append(temp_html)
+                }
+            }
+        })
+    }
+
+
 </script>
 <body>
 <div class="image">
@@ -77,13 +160,14 @@
 <div class="tag">
     <h3 class="name">로즈플라워 베어 팝니다 <span class="price">가격:49,000원/79,000원</span></h3>
     <p class="text">소중한 사람에게 오래 간직할 추억을 선물하고 싶은 당신에게.<br>영원히 시들지 않는 PE 조화장미로 제작되어 말랑한 촉감을 느낄 수 있어요.</p>
+    <p class="rate">달러-원 환율: <span id="now-rate"></span></p>
 </div>
 <div class="order">
     <div class="input-group mb-3" id="customer">
         <div class="input-group-prepend">
             <span class="input-group-text" id="customer_name">주문자 이름</span>
         </div>
-        <input type="text" class="form-control" aria-describedby="customer_name">
+        <input type="text" class="form-control" aria-describedby="customer_name" id="name">
     </div>
     <div class="input-group mb-3" id="product">
         <div class="input-group-prepend">
@@ -97,7 +181,7 @@
     </div>
     <div class="input-group mb-3" id="delivery_method">
         <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">수량</label>
+            <label class="input-group-text" for="inputGroupSelect01">수령 방법</label>
         </div>
         <select class="custom-select" id="inputGroupSelect02">
             <option selected>-- 수령 방법을 선택해주세요 --</option>
@@ -106,20 +190,33 @@
             <option value="3">방문수령 (5천원 할인)</option>
         </select>
     </div>
-    <div class="input-group mb-3" id="address">
+    <div class="input-group mb-3" id="address_form">
         <div class="input-group-prepend">
             <span class="input-group-text" id="address_text">주소</span>
         </div>
-        <input type="text" class="form-control" aria-describedby="address_text">
+        <input type="text" class="form-control" aria-describedby="address_text" id="address">
     </div>
     <div class="input-group mb-3" id="phone_number">
         <div class="input-group-prepend">
             <span class="input-group-text" id="phone_text">전화번호</span>
         </div>
-        <input type="text" class="form-control" aria-describedby="phone_text">
+        <input type="text" class="form-control" aria-describedby="phone_text" id="phone">
     </div>
-    <button type="button" class="btn btn-primary" onclick="order()">주문하기</button>
+    <button type="button" class="btn btn-primary" onclick="postOrder()">주문하기</button>
 </div>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">주문자 이름</th>
+        <th scope="col">상품 종류</th>
+        <th scope="col">수령 방법</th>
+        <th scope="col">주소</th>
+        <th scope="col">전화번호</th>
+    </tr>
+    </thead>
+    <tbody id="orders_list">
+    </tbody>
+</table>
 </body>
 
 </html>
